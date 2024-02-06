@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head');  %>
+    <title>Edit Catatan Kebaktian</title>
+    <link rel="stylesheet" href="../stylesheets/create.css">
+</head>
+
+<body style="background: lightgray">
+
+    <div class="container">
+        <%- include('../partials/menu'); %>
+
+        <div class="content">
+                <% if (messages.error) { %>
+                    <div class="alert alert-danger" role="alert"><%- messages.error %></div>
+                    <% } %>
+                <div class="form-card">
+                    <div class="card-header">
+                        <h3>Buat Catatan Kebaktian</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" action="/posts/update/<%= id %>" method="post">
+                            <div class="form-group">
+                                <label>Jenis Kebaktian</label>
+                                <input type="text" class="form-control" name="jenis_kebaktian" value="<%= jenis_kebaktian %>" placeholder="Masukkan Jenis Kebaktian">
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal & Waktu Kebaktian</label>
+                                <input type="date" class="form-control" name="tanggal_kebaktian" placeholder="Masukkan Tanggal Kebaktian"><%= tanggal_kebaktian %>
+                                <input type="time" class="form-control" name="waktu_kebaktian" placeholder="Masukkan Waktu Kebaktian"><%= waktu_kebaktian %>
+                            </div>
+                            <div class="form-button">
+                                <button type="submit" class="btn btn-primary">UPDATE</button>
+                                <button type="reset" class="btn btn-warning">RESET</button>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/extraScripts');  %>
+</body>
+</html>

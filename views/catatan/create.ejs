@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="../stylesheets/catatan_kebaktian/create.css">
+    <title>Create Catatan Kebaktian</title>
+    <%- include('../partials/extraScripts'); %>
+      <script src="../javascripts/form.js" defer></script>
+</head>
+
+<body>
+  <% if (messages.error) { %>
+    <div class="alert alert-danger" role="alert"><%- messages.error %></div>
+    <% } %>
+      <div class="container row-wrapper">
+        <%- include('../partials/menu'); %>
+          <div class="content col-wrapper">
+            <div class="card-header row-wrapper">
+              <h1>Buat Catatan Kebaktian</h1>
+              <div class="header-button row-wrapper">
+                <button type="reset" class="btn button-17" id="reset-button"
+                  onclick="return confirm('Apakah Anda yakin untuk mereset form?')">RESET</button>
+                <a href="javascript:history.back()" class="btn btn-warning button-17" id="cancel-button"
+                  onclick="return confirm('Apakah Anda yakin untuk kembali ke halaman sebelumnya?')">Cancel</a>
+              </div>
+            </div>
+
+            <div class="card-body col-wrapper">
+              <form class="form col-wrapper" action="/catatan/store" method="post" id="catatan-form">
+                <%- include('../partials/form'); %>
+
+
+              </form>
+              <form action="/catatan/kehadiran/store" class="form col-wrapper" id="kehadiran-form">
+
+              </form>
+
+              <form action="/catatan/persembahan/store" class="form col-wrapper" id="persembahan-form">
+
+              </form>
+
+              <form action="/majelis/bertugas/store" class="form col-wrapper" id="majelis-bertugas-form">
+
+              </form>
+
+              <form action="/pelayan/bertugas/store" class="form col-wrapper" id="pelayan-firman-form">
+                
+              </form>
+
+              <div class="form-button row-wrapper">
+                <button class="btn btn-primary button-17" onclick="submitForm()" id="post-button">SIMPAN</button>
+              </div>
+            </div>
+          </div>
+      </div>
+</body>
+
+</html>

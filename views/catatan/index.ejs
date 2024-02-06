@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+    <title>Catatan Kebaktian</title>
+    <link rel="stylesheet" href="../stylesheets/catatan_kebaktian/index.css">
+</head>
+
+<body style="background: lightgray">
+
+  <% if (messages.success) { %>
+    <div class="alert alert-success" role="alert"><%- messages.success %></div>
+    <% } %>
+
+      <% if (messages.error) { %>
+        <div class="alert alert-danger" role="alert"><%- messages.error %></div>
+        <% } %>
+          <div class="container">
+            <%- include('../partials/menu') %>
+              <div class="content col-wrapper">
+                <div class="row-wrapper content-header" id="content-header">
+                  <h1>Catatan Kebaktian</h1>
+                  <div class="button-wrapper">
+                    <a href="/catatan/create" class="button-17">Tambah Catatan Kebaktian</a>
+                  </div>
+                </div>  
+                <% if(data.length){ %>
+                  <div class="card-grid">
+                    <% for(var i=0; i< data.length; i++) { %>
+                      <div class="card">
+                        <p class="text-bold">
+                          <%= data[i].jenis_kebaktian %>
+                        </p>
+                        <p>
+                          <%= data[i].tanggal_waktu_kebaktian %>
+                        </p>
+                        <p>
+                          <%= data[i].perikop_bacaan %>
+                        </p>
+                        <p>
+                          <%= data[i].tema_renungan %>
+                        </p>
+                        <div class="card-button">
+                          <a href="/catatan/edit/<%=data[i].id_kebaktian%>" class="btn">EDIT</a>
+                          <a onclick="return confirm('Apakah Anda yakin?')"
+                            href="/catatan/delete/<%=data[i].id_kebaktian%>" class="btn">HAPUS</a>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+                  <% }else{ %>
+                    <div class="no-data">
+                      Data Tidak Ditemukan !
+                    </div>
+                    <% } %>
+              </div>
+          </div>
+          <%- include('../partials/extraScripts') %>
+
+</body>
+
+</html>

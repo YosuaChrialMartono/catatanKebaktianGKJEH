@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+    <title>Catatan Kebaktian</title>
+    <link rel="stylesheet" href="../stylesheets/pelayan_firman/index.css">
+</head>
+
+<body style="background: lightgray">
+
+  <% if (messages.success) { %>
+    <div class="alert alert-success" role="alert"><%- messages.success %></div>
+    <% } %>
+
+      <% if (messages.error) { %>
+        <div class="alert alert-danger" role="alert"><%- messages.error %></div>
+        <% } %>
+          <div class="container" id="container">
+            <%- include('../partials/menu') %>
+              <div class="content col-wrapper">
+                <div class="row-wrapper content-header" id="content-header">
+                  <h1>Pelayan Firman</h1>
+                  <div class="button-wrapper">
+                    <a href="/pelayan-firman/create" class="button-17">TAMBAH</a>
+                  </div>
+                </div>
+                <!-- Change the loop later -->
+                <% if(data.length){ %>
+                  <div class="card-grid">
+                    <% for (var i=0; i<data.length; i++) { %>
+                      <div class="card-item col-wrapper">
+                        <h2>
+                          <%= data[i].nama_pelayan_firman %>
+                        </h2>
+                        <p>
+                          <%= data[i].asal_pelayan_firman %>
+                        </p>
+                        <div class="card-button row-wrapper">
+                          <a href="/pelayan-firman/edit/<%=data[i].pelayan_firman_id%>" class="button-17">EDIT</a>
+                          <a onclick="return confirm('Apakah Anda yakin?')"
+                            href="/pelayan-firman/delete/<%=data[i].pelayan_firman_id%>"
+                            class="button-17 btn-warning">HAPUS</a>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+                  <% }else{ %>
+                    <div class="no-data">
+                      Data Tidak Ditemukan !
+                    </div>
+                    <% } %>
+              </div>
+          </div>
+
+          <div class="modal center" id="modal-pelayan-firman">
+            <div class="modal-header row-wrapper" id="modal-pelayan-firman-header">
+              <h2 id="modal-pelayan-firman-title">Modal Header</h2>
+              <span class="close row-wrapper" id="modal-close-button">&times;</span>
+            </div>
+            <div class="modal-content" id="modal-pelayan-firman-content">
+              <p>Some text in the Modal..</p>
+            </div>
+            <div class="modal-footer" id="modal-pelayan-firman-footer">
+              <h3>Modal Footer</h3>
+            </div>
+          </div>
+          <%- include('../partials/extraScripts') %>
+
+</body>
+
+</html>
