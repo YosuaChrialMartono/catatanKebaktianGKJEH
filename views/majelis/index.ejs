@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+    <title><%- title %></title>
+    <link rel="stylesheet" href="../stylesheets/majelis/index.css">
+</head>
+
+<body style="background: lightgray">
+
+  <% if (messages.success) { %>
+    <div class="alert alert-success" role="alert"><%- messages.success %></div>
+    <% } %>
+
+      <% if (messages.error) { %>
+        <div class="alert alert-danger" role="alert"><%- messages.error %></div>
+        <% } %>
+          <div class="container" id="container">
+            <%- include('../partials/menu') %>
+              <div class="content col-wrapper">
+                <div class="row-wrapper content-header" id="content-header">
+                  <h1>Majelis Gereja</h1>
+                  <div class="button-wrapper">
+                    <button class="button-17" id="refresh-grid-button" onclick="updateMajelisGrid(true);">
+                      Refresh List Majelis
+                    </button>
+                    <button class="button-17" onclick="showModal()">Tambah majelis</button>
+                  </div>
+                </div>
+                <div id="majelis-grid">
+                  
+                </div>
+              </div>
+          </div>
+
+          <div class="modal center" id="modal">
+            <div class="modal-header row-wrapper" id="modal-majelis-header">
+              <h2 id="modal-majelis-title">Majelis</h2>
+              <span class="close row-wrapper" id="modal-close-button">&times;</span>
+            </div>
+
+            <div class="modal-content" id="modal-majelis-content">
+              <div class="modal-form">
+                <div class="form col-wrapper" id="majelis-form">
+                  <div class="form-group row-wrapper" id="nama-majelis">
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" name="nama" placeholder="Nama Majelis">
+                  </div>
+                  <div class="form-group row-wrapper" id="wilayah-majelis">
+                    <label for="wilayah">Wilayah</label>
+                    <input type="text" id="wilayah" name="wilayah" placeholder="Wilayah Majelis">
+                  </div>
+                  <div class="form-group row-wrapper" id="gelar-majelis">
+                    <label for="gelar">Gelar</label>
+                    <input type="text" id="gelar" name="gelar" placeholder="Gelar Majelis, Cth: Penatua, Diaken">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer row-wrapper" id="modal-majelis-footer">
+              <button type="reset" class="button-17 btn-warning"
+                onclick="resetForm()">reset</button>
+              <button type="sumbit" class="button-17 submit-btn" id="modal-majelis-submit">Submit</button>
+            </div>
+
+          </div>
+          <%- include('../partials/extraScripts') %>
+            <script src="../javascripts/index.js"></script>
+            <script src="../javascripts/majelis/index.js"></script>
+
+</body>
+
+</html>
