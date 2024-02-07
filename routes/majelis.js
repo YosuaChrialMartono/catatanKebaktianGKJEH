@@ -129,4 +129,21 @@ router.post('/create', function (req, res, next) {
     }
 })
 
+router.delete('/delete/:id', function (req, res, next) {
+    const majelisId = req.params.id;
+    connection.query('DELETE FROM majelis WHERE majelis_id = ?', majelisId, function (err, result) {
+        if (err) {
+            res.status(500).json({
+                status: 500,
+                message: err
+            });
+        } else {
+            res.status(200).json({
+                status: 200,
+                message: 'Majelis berhasil dihapus'
+            });
+        }
+    });
+});
+
 module.exports = router;
