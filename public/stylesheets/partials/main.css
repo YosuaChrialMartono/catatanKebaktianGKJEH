@@ -65,6 +65,10 @@ body {
     transform: translate(-50%, -50%);
   }
 
+.w-full {
+    width: 100%;
+}
+
 /* menu css */
 .menu {
     align-self: stretch;
@@ -376,8 +380,9 @@ select:focus {
     width: 200px;
 }
 
-.modal-form .form-group input {
-    width: 100%;
+.modal-form .form-group .input-div .helper-text {
+    color: red;
+    font-size: 12px;
 }
 
 .modal-footer {

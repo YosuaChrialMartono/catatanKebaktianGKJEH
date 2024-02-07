@@ -61,6 +61,28 @@ async function updateMajelisGrid(showToast = false) {
             let deleteButton = document.createElement('button');
             deleteButton.classList.add('btn-warning', 'button-17');
             deleteButton.innerHTML = 'Hapus';
+            deleteButton.onclick = function () {
+                let deletePermission = confirm('Apakah anda yakin ingin menghapus majelis ini?');
+                if (deletePermission) {
+                    fetch('/majelis/delete/' + majelis.majelis_id, {
+                        method: 'DELETE'
+                    })
+                        .then(response => {
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.status === 200) {
+                                makeToast('success', data.message);
+                                updateMajelisGrid();
+                            } else {
+                                makeToast('warning', data.message);
+                            }
+                        })
+                        .catch(error => {
+                            makeToast('error', error);
+                        });
+                }
+            }
 
             cardButton.appendChild(editButton);
             cardButton.appendChild(deleteButton);
@@ -139,15 +161,20 @@ async function createMajelis() {
 
     let majelis = {};
     majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
-        formDiv.querySelectorAll('input').forEach(function (input) {
+        formDiv.querySelectorAll('.input-div').forEach(function (inputDiv) {
+            console.log(inputDiv)
+            let input = inputDiv.querySelector('input');
+            console.log(input)
+            let helperText = inputDiv.querySelector('.helper-text');
+
             if (input.value.length === 0) {
-                let helperTextDiv = document.createElement('div');
-                helperTextDiv.classList.add('helper-text');
-
-                let helperText = document.createElement('p');
+                console.log('Input ini diperlukan');
+                console.log(input)
+                console.log(helperText)
                 helperText.innerHTML = 'Input ini diperlukan';
-
-                formDiv.appendChild(helperTextDiv);
+            }
+            else {
+                helperText.innerHTML = '';
             }
             majelis[input.name] = input.value;
         })
@@ -161,15 +188,10 @@ async function createMajelis() {
         body: JSON.stringify(majelis)
     })
         .then(response => {
-            console.log(response);
-            console.log(response.status);
-
             return response.json();
         })
         .then(data => {
-            // Access the message property from the resolved JSON data
-            console.log(data);
-            if (data.status === 200) {  // Fix here: data.status instead of data[status]
+            if (data.status === 200) { 
                 makeToast('success', data.message);
                 updateMajelisGrid();
                 resetForm(true);
