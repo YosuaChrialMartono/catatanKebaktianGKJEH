@@ -129,6 +129,69 @@ router.post('/create', function (req, res, next) {
     }
 })
 
+router.put('/update/:id', function (req, res, next) {
+    let majelisId = req.params.id;
+    let nama = req.body.nama;
+    let wilayah = req.body.wilayah;
+    let gelar = req.body.gelar;
+    let errors = false;
+
+    // Validation
+    if (nama.length === 0 || wilayah.length === 0 || gelar.length === 0) {
+        errors = true;
+        res.status(400).json({
+            status: 400,
+            message: 'Tolong isi semua input'
+        })
+    }
+
+    [nama, wilayah, gelar].forEach(function (item) {
+        if (item.length === 0) {
+            errors = true;
+            res.status(400).json({
+                status: 400,
+                message: 'Tolong isi input' + item
+            })
+        }
+    })
+
+    if (!errors) {
+        let majelis = {
+            nama: nama,
+            wilayah: wilayah,
+            gelar: gelar
+        }
+
+        // Update query
+        connection.query('UPDATE majelis SET ? WHERE majelis_id = ?', [majelis, majelisId], function (err, result) {
+            if (err) {
+                console.log(err.code);
+                switch (err.code) {
+                    case 'ER_DUP_ENTRY':
+                        res.status(400).json({
+                            status: 400,
+                            message: 'Majelis sudah ada!'
+                        });
+                        break;
+
+                    default:
+                        res.status(500).json({
+                            status: 500,
+                            message: err
+                        });
+                        break;
+                }
+            } else {
+                res.status(200).json({
+                    status: 200,
+                    message: 'Majelis berhasil diupdate'
+                });
+            }
+        });
+    }
+});
+
+
 router.delete('/delete/:id', function (req, res, next) {
     const majelisId = req.params.id;
     connection.query('DELETE FROM majelis WHERE majelis_id = ?', majelisId, function (err, result) {

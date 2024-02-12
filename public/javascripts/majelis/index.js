@@ -57,6 +57,9 @@ async function updateMajelisGrid(showToast = false) {
             let editButton = document.createElement('button');
             editButton.classList.add('edit-button', 'button-17');
             editButton.innerHTML = 'Edit';
+            editButton.onclick = function () {
+                editMajelis(majelis.majelis_id);
+            }
 
             let deleteButton = document.createElement('button');
             deleteButton.classList.add('btn-warning', 'button-17');
@@ -97,50 +100,9 @@ async function updateMajelisGrid(showToast = false) {
         )
         majelisGrid.appendChild(cardGrid);
     }
-    if (showToast){
+    if (showToast) {
         makeToast('info', 'Majelis grid updated');
     }
-}
-
-async function editMajelis(id) {
-    let majelis = {};
-    form.querySelectorAll('.form-group').forEach(function (formDiv) {
-        let helperText = formDiv.querySelector('.helper-text');
-        formDiv.querySelectorAll('input').forEach(function (input) {
-            if (input.value.length === 0) {
-                helperText.innerHTML = 'Input ini diperlukan';
-                helperText.classList.remove('hidden');
-            }
-            majelis[input.name] = input.value;
-        })
-    });
-
-    fetch('/majelis/update/' + i, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(majelis)
-    })
-        .then(response => {
-            console.log(response);
-            console.log(response.status);
-
-            // Use response.json() to parse the JSON in the response
-            return response.json();
-        })
-        .then(data => {
-            // Access the message property from the resolved JSON data
-            console.log(data.message);
-
-            // If there is a 'majelis' property in the response, you can access it
-            if (data.majelis) {
-                console.log(data.majelis);
-            }
-        })
-        .catch(error => {
-            console.error(error);
-        });
 }
 
 async function resetForm(bypass = false) {
@@ -160,70 +122,133 @@ async function resetForm(bypass = false) {
 async function createMajelis() {
 
     let majelis = {};
-    majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
-        formDiv.querySelectorAll('.input-div').forEach(function (inputDiv) {
-            console.log(inputDiv)
-            let input = inputDiv.querySelector('input');
-            console.log(input)
-            let helperText = inputDiv.querySelector('.helper-text');
 
-            if (input.value.length === 0) {
-                console.log('Input ini diperlukan');
-                console.log(input)
-                console.log(helperText)
-                helperText.innerHTML = 'Input ini diperlukan';
-            }
-            else {
-                helperText.innerHTML = '';
-            }
-            majelis[input.name] = input.value;
-        })
-    });
+    // Set the submit button to update
+    let submitButton = document.getElementById('modal-majelis-submit');
 
-    fetch('/majelis/create', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(majelis)
-    })
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 200) { 
-                makeToast('success', data.message);
-                updateMajelisGrid();
-                resetForm(true);
-                hideModal();
-            } else {
-                makeToast('warning', data.message);
-            }
+    submitButton.innerHTML = 'Create';
 
-            // If there is a 'majelis' property in the response, you can access it
-            if (data.majelis) {
-                console.log(data.majelis);
-            }
-        })
-        .catch(error => {
-            makeToast('error', error);
+    submitButton.onclick = function () {
+        console.log('Creating Majelis')
+        majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
+            formDiv.querySelectorAll('.input-div').forEach(function (inputDiv) {
+                let input = inputDiv.querySelector('input');
+                let helperText = inputDiv.querySelector('.helper-text');
+
+                if (input.value.length === 0) {
+                    helperText.innerHTML = 'Input ini diperlukan';
+                }
+                else {
+                    helperText.innerHTML = '';
+                }
+                majelis[input.name] = input.value;
+            })
         });
+
+        fetch('/majelis/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(majelis)
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 200) {
+                    makeToast('success', data.message);
+                    updateMajelisGrid();
+                    resetForm(true);
+                    hideModal();
+                } else {
+                    makeToast('warning', data.message);
+                }
+
+                // If there is a 'majelis' property in the response, you can access it
+                if (data.majelis) {
+                    console.log(data.majelis);
+                }
+            })
+            .catch(error => {
+                makeToast('error', error);
+            });
+    }
+    showModal();
 
 }
 
+
+async function editMajelis(id) {
+    let majelis = await getMajelis(id);
+
+    // Set the form values
+    majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
+        formDiv.querySelectorAll('input').forEach(function (input) {
+            input.value = majelis[input.name];
+        })
+    });
+
+    // Set the submit button to update
+    let submitButton = document.getElementById('modal-majelis-submit');
+
+    submitButton.innerHTML = 'Update';
+
+    submitButton.onclick = function () {
+        majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
+            formDiv.querySelectorAll('.input-div').forEach(function (inputDiv) {
+                let input = inputDiv.querySelector('input');
+                let helperText = inputDiv.querySelector('.helper-text');
+
+                if (input.value.length === 0) {
+                    helperText.innerHTML = 'Input ini diperlukan';
+                }
+                else {
+                    helperText.innerHTML = '';
+                }
+                majelis[input.name] = input.value;
+            })
+        });
+
+        console.log('Updating majelis');
+        fetch('/majelis/update/' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(majelis)
+        })
+            .then(response => {
+                // Use response.json() to parse the JSON in the response
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 200) {
+                    makeToast('success', data.message);
+                    updateMajelisGrid();
+                    resetForm(true);
+                    hideModal();
+                } else {
+                    makeToast('warning', data.message);
+                }
+
+                // If there is a 'majelis' property in the response, you can access it
+                if (data.majelis) {
+                    console.log(data.majelis);
+                }
+            })
+            .catch(error => {
+                makeToast('error', error);
+            });
+    }
+
+    // Show the modal
+    showModal();
+}
+
+
 const majelisGrid = document.getElementById('majelis-grid');
 const majelisForm = document.getElementById('majelis-form');
-
-majelisGrid.addEventListener('click', function (event) {
-    const target = event.target;
-    if (target.classList.contains('edit-button')) {
-        console.log(target);
-    } else if (target.classList.contains('delete-button')) {
-        console.log(target);
-    }
-});
-
-document.getElementById('modal-majelis-submit').addEventListener('click', createMajelis);
 
 document.addEventListener('DOMContentLoaded', function () {
     updateMajelisGrid();
