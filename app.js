@@ -6,13 +6,15 @@ var logger = require('morgan');
 
 
 //library
-var flash   = require('express-flash');
+var flash = require('express-flash');
 var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var pelayanFirmanRouter = require('./routes/pelayanFirman');
-var catatanRouter = require('./routes/catatan'); 
+var catatanRouter = require('./routes/catatan');
 var majelisRouter = require('./routes/majelis');
+var kehadiranRouter = require('./routes/kehadiran');
+var persembahanRouter = require('./routes/persembahan');
 
 var app = express();
 
@@ -26,9 +28,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ 
-  cookie: { 
-    maxAge: 60000 
+app.use(session({
+  cookie: {
+    maxAge: 60000
   },
   store: new session.MemoryStore,
   saveUninitialized: true,
@@ -47,18 +49,20 @@ app.use((req, res, next) => {
 });
 
 // Route setup
-app.use('/catatan', catatanRouter); 
+app.use('/catatan', catatanRouter);
 app.use('/helper', indexRouter);
 app.use('/majelis', majelisRouter);
 app.use('/pelayan-firman', pelayanFirmanRouter);
+app.use('/kehadiran', kehadiranRouter);
+app.use('/persembahan', persembahanRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
