@@ -29,7 +29,7 @@
                   </div>
                 </div>
                 <div id="majelis-grid">
-                  
+
                 </div>
               </div>
           </div>
@@ -55,18 +55,27 @@
                   <div class="form-group row-wrapper" id="wilayah-majelis">
                     <label for="wilayah">Wilayah</label>
                     <div class="col-wrapper w-full input-div" id="input-wilayah">
-                      <input type="text" id="wilayah" name="wilayah" placeholder="Wilayah Majelis">
+                      <select id="wilayah" name="wilayah">
+                        <option value="Paseltan">Paseltan</option>
+                        <option value="Pasutra">Pasutra</option>
+                        <option value="Pandur">Pandur</option>
+                        <option value="Teruri">Teruri</option>
+                        <option value="Pulobalimentas">Pulobalimentas</option>
+                      </select>
                       <div class="helper-text">
-                        
+
                       </div>
                     </div>
                   </div>
                   <div class="form-group row-wrapper" id="gelar-majelis">
                     <label for="gelar">Gelar</label>
                     <div class="col-wrapper w-full input-div" id="input-gelar">
-                      <input type="text" id="gelar" name="gelar" placeholder="Gelar Majelis, Cth: Penatua, Diaken">
+                      <select name="gelar" id="gelar">
+                        <option value="Penatua">Penatua</option>
+                        <option value="Diaken">Diaken</option>
+                      </select>
                       <div class="helper-text">
-                        
+
                       </div>
                     </div>
                   </div>
@@ -75,8 +84,7 @@
             </div>
 
             <div class="modal-footer row-wrapper" id="modal-majelis-footer">
-              <button type="reset" class="button-17 btn-warning"
-                onclick="resetForm()">reset</button>
+              <button type="reset" class="button-17 btn-warning" onclick="resetForm()">reset</button>
               <button class="button-17 submit-btn" id="modal-majelis-submit">Submit</button>
             </div>
 

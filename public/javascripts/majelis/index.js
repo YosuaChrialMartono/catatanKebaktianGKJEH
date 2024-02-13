@@ -45,11 +45,9 @@ async function updateMajelisGrid(showToast = false) {
             let cardItem = document.createElement('div');
             cardItem.classList.add('card-item', 'col-wrapper');
             let namaMajelis = document.createElement('h2');
-            namaMajelis.innerHTML = majelis.nama;
+            namaMajelis.innerHTML = gelarAbbr[majelis.gelar] + " " + majelis.nama;
             let wilayahMajelis = document.createElement('p');
-            wilayahMajelis.innerHTML = majelis.wilayah;
-            let gelarMajelis = document.createElement('p');
-            gelarMajelis.innerHTML = majelis.gelar;
+            wilayahMajelis.innerHTML = "Wilayah " + majelis.wilayah;
 
             let cardButton = document.createElement('div');
             cardButton.classList.add('card-button', 'row-wrapper');
@@ -92,7 +90,6 @@ async function updateMajelisGrid(showToast = false) {
 
             cardItem.appendChild(namaMajelis);
             cardItem.appendChild(wilayahMajelis);
-            cardItem.appendChild(gelarMajelis);
             cardItem.appendChild(cardButton);
 
             cardGrid.appendChild(cardItem);
@@ -133,6 +130,9 @@ async function createMajelis() {
         majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
             formDiv.querySelectorAll('.input-div').forEach(function (inputDiv) {
                 let input = inputDiv.querySelector('input');
+                if (input === null) {
+                    return;
+                }
                 let helperText = inputDiv.querySelector('.helper-text');
 
                 if (input.value.length === 0) {
@@ -142,6 +142,9 @@ async function createMajelis() {
                     helperText.innerHTML = '';
                 }
                 majelis[input.name] = input.value;
+            })
+            formDiv.querySelectorAll('select').forEach(function (select) {
+                majelis[select.name] = select.value;
             })
         });
 
@@ -187,6 +190,9 @@ async function editMajelis(id) {
         formDiv.querySelectorAll('input').forEach(function (input) {
             input.value = majelis[input.name];
         })
+        formDiv.querySelectorAll('select').forEach(function (select) {
+            select.value = majelis[select.name];
+        })
     });
 
     // Set the submit button to update
@@ -198,6 +204,9 @@ async function editMajelis(id) {
         majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
             formDiv.querySelectorAll('.input-div').forEach(function (inputDiv) {
                 let input = inputDiv.querySelector('input');
+                if (input === null) {
+                    return;
+                }
                 let helperText = inputDiv.querySelector('.helper-text');
 
                 if (input.value.length === 0) {
@@ -207,6 +216,9 @@ async function editMajelis(id) {
                     helperText.innerHTML = '';
                 }
                 majelis[input.name] = input.value;
+            })
+            formDiv.querySelectorAll('select').forEach(function (select) {
+                majelis[select.name] = select.value;
             })
         });
 
@@ -249,6 +261,19 @@ async function editMajelis(id) {
 
 const majelisGrid = document.getElementById('majelis-grid');
 const majelisForm = document.getElementById('majelis-form');
+
+const gelarAbbr = {
+    "Penatua": "Pnt",
+    "Diaken": "Dkn"
+}
+
+const wilayahGereja = [
+    "Paseltan",
+    "Pasutra",
+    "Pandur",
+    "Teruri",
+    "Pulobalimentas"
+]
 
 document.addEventListener('DOMContentLoaded', function () {
     updateMajelisGrid();
