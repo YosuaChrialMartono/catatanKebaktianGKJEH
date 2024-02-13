@@ -3,69 +3,69 @@
 
 <head>
   <%- include('../partials/head') %>
-    <title>Catatan Kebaktian</title>
+    <title><%- title %></title>
     <link rel="stylesheet" href="../stylesheets/pelayan_firman/index.css">
 </head>
 
-<body style="background: lightgray">
+<body>
+  <div class="container" id="container">
+    <%- include('../partials/menu') %>
+      <div class="content col-wrapper">
+        <div class="row-wrapper content-header" id="content-header">
+          <h1>Pelayan Firman</h1>
+          <div class="button-wrapper">
+            <button class="button-17" id="refresh-grid-button" onclick="updatePelayanFirmanGrid(true);">
+              Refresh List Pelayan Firman
+            </button>
+            <button class="button-17" onclick="createPelayanFirman()">Tambah Pelayan Firman</button>
+          </div>
+        </div>
+        <div id="pelayan-firman-grid">
 
-  <% if (messages.success) { %>
-    <div class="alert alert-success" role="alert"><%- messages.success %></div>
-    <% } %>
+        </div>
+      </div>
+  </div>
+  <div class="modal center" id="modal">
+    <div class="modal-header row-wrapper" id="modal-pelayan-firman-header">
+      <h2 id="modal-pelayan-firman-title">Pelayan Firman</h2>
+      <span class="close row-wrapper" id="modal-close-button">&times;</span>
+    </div>
 
-      <% if (messages.error) { %>
-        <div class="alert alert-danger" role="alert"><%- messages.error %></div>
-        <% } %>
-          <div class="container" id="container">
-            <%- include('../partials/menu') %>
-              <div class="content col-wrapper">
-                <div class="row-wrapper content-header" id="content-header">
-                  <h1>Pelayan Firman</h1>
-                  <div class="button-wrapper">
-                    <a href="/pelayan-firman/create" class="button-17">TAMBAH</a>
-                  </div>
-                </div>
-                <!-- Change the loop later -->
-                <% if(data.length){ %>
-                  <div class="card-grid">
-                    <% for (var i=0; i<data.length; i++) { %>
-                      <div class="card-item col-wrapper">
-                        <h2>
-                          <%= data[i].nama_pelayan_firman %>
-                        </h2>
-                        <p>
-                          <%= data[i].asal_pelayan_firman %>
-                        </p>
-                        <div class="card-button row-wrapper">
-                          <a href="/pelayan-firman/edit/<%=data[i].pelayan_firman_id%>" class="button-17">EDIT</a>
-                          <a onclick="return confirm('Apakah Anda yakin?')"
-                            href="/pelayan-firman/delete/<%=data[i].pelayan_firman_id%>"
-                            class="button-17 btn-warning">HAPUS</a>
-                        </div>
-                      </div>
-                      <% } %>
-                  </div>
-                  <% }else{ %>
-                    <div class="no-data">
-                      Data Tidak Ditemukan !
-                    </div>
-                    <% } %>
+    <div class="modal-content" id="modal-pelayan-firman-content">
+      <div class="modal-form">
+        <div class="form col-wrapper" id="pelayan-firman-form">
+          <div class="form-group row-wrapper" id="nama-pelayan-firman">
+            <label for="nama">Nama</label>
+            <div class="col-wrapper w-full input-div" id="input-nama">
+              <input type="text" id="nama" name="nama" placeholder="Nama Pelayan Firman">
+              <div class="helper-text">
+
               </div>
+            </div>
           </div>
+          <div class="form-group row-wrapper" id="asal-pelayan-firman">
+            <label for="asal">Asal</label>
+            <div class="col-wrapper w-full input-div" id="input-asal">
+              <input type="text" id="asal" name="asal" placeholder="Asal Pelayan Firman">
+              <div class="helper-text">
 
-          <div class="modal center" id="modal-pelayan-firman">
-            <div class="modal-header row-wrapper" id="modal-pelayan-firman-header">
-              <h2 id="modal-pelayan-firman-title">Modal Header</h2>
-              <span class="close row-wrapper" id="modal-close-button">&times;</span>
-            </div>
-            <div class="modal-content" id="modal-pelayan-firman-content">
-              <p>Some text in the Modal..</p>
-            </div>
-            <div class="modal-footer" id="modal-pelayan-firman-footer">
-              <h3>Modal Footer</h3>
+              </div>
             </div>
           </div>
-          <%- include('../partials/extraScripts') %>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer row-wrapper" id="modal-pelayan-firman-footer">
+      <button type="reset" class="button-17 btn-warning" id="modal-form-reset-button">reset</button>
+      <button class="button-17 submit-btn" id="modal-pelayan-firman-submit">Submit</button>
+    </div>
+
+  </div>
+
+  <%- include('../partials/extraScripts') %>
+    <script src="../javascripts/index.js"></script>
+    <script src="../javascripts/pelayan_firman/index.js"></script>
 
 </body>
 

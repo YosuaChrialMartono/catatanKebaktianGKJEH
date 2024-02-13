@@ -32,6 +32,7 @@ router.get('/', function (req, res, next) {
 router.get('/create', function (req, res, next) {
     res.render('catatan/create', {
         list_kitab: list_kitab,
+        title: "Form Catatan Kebaktian"
     })
 })
 
@@ -94,7 +95,7 @@ router.post('/store', function (req, res, next) {
                             message: "Catatan Kebaktian dengan jenis, tanggal dan waktu yang sama sudah ada!"
                         })
                         break;
-                
+
                     default:
                         res.status(500).json({
                             message: err

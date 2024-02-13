@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .header-button {
     gap: 20px;
 }
@@ -25,7 +26,6 @@
     justify-content: center;
     gap: 30px;
     padding: 10px;
-    width: 700px;
 }
 
 .form-group {
@@ -45,7 +45,7 @@
 }
 
 .form-group-child {
-    width: inherit;
+    width: 100%;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
@@ -156,6 +156,10 @@
 
 .kehadiran-jemaat-form .form-group-child {
     justify-content: space-between;
+    width: 100%;
+}
+
+.kehadiran-jemaat-form #peserta-perjamuan-kudus input {
     width: 100%;
 }
 
