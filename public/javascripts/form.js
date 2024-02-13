@@ -1,5 +1,3 @@
-// Ayat Script
-
 // Update the pasal options based on the selected kitab
 async function updatePasalOptions() {
     const kitabSelect = document.getElementById('kitab');
@@ -74,7 +72,6 @@ async function updateAyatOptions() {
 }
 
 // Persembahan Script
-
 async function getTotalPersembahan() {
     const persembahanForm = document.getElementById('persembahan-form');
     const persembahanFields = persembahanForm.querySelectorAll('input:not([name="amplop"])');
@@ -98,7 +95,6 @@ async function updateTotalPersembahan() {
 }
 
 // Jemaat Script
-
 async function getTotalKehadiran() {
     const kehadiranPria = document.getElementsByName('jemaat_pria');
     let totalPria = 0;
@@ -131,14 +127,18 @@ async function updateKehadiranJemaat() {
 }
 
 // Majelis Bertugas Script
-
 async function getAllMajelis() {
     let majelisList = [];
 
     try {
-        const response = await fetch(mainUrl + '/majelis/json');
-        const listMajelisData = await response.json();
-        majelisList = listMajelisData.data;
+        const response = await fetch('/majelis/json');
+        const majelisListData = await response.json();
+
+        if (majelisListData.status === 200) {
+            majelisList = majelisListData.data;
+        } else {
+            makeToast('error', majelisListData.message);
+        }
     } catch (error) {
         console.error('Error fetching majelis data:', error);
     }
@@ -146,9 +146,9 @@ async function getAllMajelis() {
     return majelisList;
 }
 
+const majelisBertugasForm = document.getElementById('majelis-tugas');
 async function addMajelisBertugas() {
     listMajelis = await getAllMajelis();
-    const majelisBertugasForm = document.getElementById('majelis-tugas-form');
 
     const majelisTugasInputDiv = document.createElement('div');
     majelisTugasInputDiv.classList.add('row-wrapper', 'form-group-child');
@@ -196,7 +196,7 @@ async function addMajelisBertugas() {
 // Update majelis selections
 async function updateMajelisOptions() {
     listMajelis = await getAllMajelis();
-    
+
     const picIbadahSelect = document.getElementById('pic-ibadah-selection');
     const majelisPembuatSelect = document.getElementById('majelis-pembuat-selection');
 
@@ -212,6 +212,7 @@ async function updateMajelisOptions() {
     });
 }
 
+// TODO
 async function submitForm() {
     const form = document.getElementById('catatan-form');
     const action = form.getAttribute('action');
@@ -257,23 +258,62 @@ document.addEventListener('DOMContentLoaded', function () {
     kehadiranForm.addEventListener('input', function () {
         updateKehadiranJemaat();
     });
-
-    // Reset Form Script
-    const resetButton = document.getElementById('reset-button');
-    resetButton.addEventListener('click', function () {
-        console.log('resetting form');
-
-        // Reset Persembahan Count
-        const totalPersembahan = document.getElementById('total-persembahan');
-        totalPersembahan.textContent = '0';
-
-        // Reset Kehadiran Jemaat Count
-        const totalKehadiranPriaField = document.getElementById('total-kehadiran-pria');
-        const totalKehadiranWanitaField = document.getElementById('total-kehadiran-wanita');
-
-        totalKehadiranPriaField.textContent = '0';
-        totalKehadiranWanitaField.textContent = '0';
-
-        updateMajelisOptions();
-    });
 });
+
+async function resetForm() {
+    confirmation = confirm('Apakah Anda yakin ingin mereset form?');
+    if (!confirmation) {
+        return;
+    }
+    console.log('resetting form');
+
+    //Form groups that can be automatically reset
+    ['catatan-form-1', 'persembahan-form', 'kehadiran-jemaat-form', 'catatan-form-2', 'evaluasi-kebaktian'].forEach(formId => {
+        resetFormGroup(formId);
+    });
+
+    // Reset Persembahan Count
+    const totalPersembahan = document.getElementById('total-persembahan');
+    totalPersembahan.textContent = '0';
+
+    // Reset Kehadiran Jemaat Count
+    const totalKehadiranPriaField = document.getElementById('total-kehadiran-pria');
+    const totalKehadiranWanitaField = document.getElementById('total-kehadiran-wanita');
+
+    totalKehadiranPriaField.textContent = '0';
+    totalKehadiranWanitaField.textContent = '0';
+
+    // Reset Majelis Bertugas Form
+    const majelisBertugasForm = document.getElementById('majelis-tugas');
+    majelisBertugasForm.innerHTML = '';
+
+    updateMajelisOptions();
+}
+
+async function resetFormGroup(elementId) {
+    const form = document.getElementById(elementId);
+
+    if (form) {
+        const inputElements = form.querySelectorAll('input, select, textarea');
+
+        inputElements.forEach((input) => {
+            switch (input.type) {
+                case 'text':
+                case 'date':
+                case 'time':
+                case 'password':
+                case 'textarea':
+                case 'select-one':
+                case 'select-multiple':
+                    input.value = '';
+                    break;
+                case 'checkbox':
+                case 'radio':
+                    input.checked = false;
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+}
