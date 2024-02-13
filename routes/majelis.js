@@ -59,7 +59,7 @@ router.post('/create', function (req, res, next) {
     let errors = false;
 
     // Validation
-    if (nama.length === 0 || wilayah.length === 0 || gelar.length === 0) {
+    if (nama.length === 0 && wilayah.length === 0 && gelar.length === 0) {
         errors = true;
         res.status(400).json({
             status: 400,
@@ -67,12 +67,12 @@ router.post('/create', function (req, res, next) {
         })
     }
 
-    [nama, wilayah, gelar].forEach(function (item) {
-        if (item.length === 0) {
+    [[nama, 'Nama'], [wilayah, 'Wilayah'], [gelar, 'Gelar']].forEach(function (item) {
+        if (item[0].length === 0) {
             errors = true;
             res.status(400).json({
                 status: 400,
-                message: 'Tolong isi input' + item
+                message: 'Tolong isi input ' + item[1]
             })
         }
     })
@@ -145,12 +145,12 @@ router.put('/update/:id', function (req, res, next) {
         })
     }
 
-    [nama, wilayah, gelar].forEach(function (item) {
-        if (item.length === 0) {
+    [[nama, 'Nama'], [wilayah, 'Wilayah'], [gelar, 'Gelar']].forEach(function (item) {
+        if (item[0].length === 0) {
             errors = true;
             res.status(400).json({
                 status: 400,
-                message: 'Tolong isi input' + item
+                message: 'Tolong isi input ' + item[1]
             })
         }
     })
