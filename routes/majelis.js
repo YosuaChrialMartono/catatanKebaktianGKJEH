@@ -137,7 +137,7 @@ router.put('/update/:id', function (req, res, next) {
     let errors = false;
 
     // Validation
-    if (nama.length === 0 || wilayah.length === 0 || gelar.length === 0) {
+    if (nama.length === 0 && wilayah.length === 0 && gelar.length === 0) {
         errors = true;
         res.status(400).json({
             status: 400,
