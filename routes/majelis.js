@@ -104,24 +104,9 @@ router.post('/create', function (req, res, next) {
                         break;
                 }
             } else {
-                // Retrieve the inserted data using the insertId
-                const insertedMajelisId = result.insertId;
-
-                // You might need to perform another SELECT query to get the full majelis data
-                connection.query('SELECT * FROM majelis WHERE majelis_id = ?', insertedMajelisId, function (selectErr, selectResult) {
-                    if (selectErr) {
-                        res.status(500).json({
-                            status: 500,
-                            message: selectErr
-                        });
-                    } else {
-                        res.status(200).json({
-                            status: 200,
-                            message: 'Berhasil menambah majelis',
-                            majelis: selectResult[0] // Assuming only one row is returned
-                        });
-                        console.log(selectResult[0]);
-                    }
+                res.status(200).json({
+                    status: 200,
+                    message: 'Berhasil menambah majelis',
                 });
             }
         });
