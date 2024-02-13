@@ -7,91 +7,83 @@
     <link rel="stylesheet" href="../stylesheets/majelis/index.css">
 </head>
 
-<body style="background: lightgray">
-
-  <% if (messages.success) { %>
-    <div class="alert alert-success" role="alert"><%- messages.success %></div>
-    <% } %>
-
-      <% if (messages.error) { %>
-        <div class="alert alert-danger" role="alert"><%- messages.error %></div>
-        <% } %>
-          <div class="container" id="container">
-            <%- include('../partials/menu') %>
-              <div class="content col-wrapper">
-                <div class="row-wrapper content-header" id="content-header">
-                  <h1>Majelis Gereja</h1>
-                  <div class="button-wrapper">
-                    <button class="button-17" id="refresh-grid-button" onclick="updateMajelisGrid(true);">
-                      Refresh List Majelis
-                    </button>
-                    <button class="button-17" onclick="createMajelis()">Tambah majelis</button>
-                  </div>
-                </div>
-                <div id="majelis-grid">
-
-                </div>
-              </div>
+<body>
+  <div class="container" id="container">
+    <%- include('../partials/menu') %>
+      <div class="content col-wrapper">
+        <div class="row-wrapper content-header" id="content-header">
+          <h1>Majelis Gereja</h1>
+          <div class="button-wrapper">
+            <button class="button-17" id="refresh-grid-button" onclick="updateMajelisGrid(true);">
+              Refresh List Majelis
+            </button>
+            <button class="button-17" onclick="createMajelis()">Tambah majelis</button>
           </div>
+        </div>
+        <div id="majelis-grid">
 
-          <div class="modal center" id="modal">
-            <div class="modal-header row-wrapper" id="modal-majelis-header">
-              <h2 id="modal-majelis-title">Majelis</h2>
-              <span class="close row-wrapper" id="modal-close-button">&times;</span>
-            </div>
+        </div>
+      </div>
+  </div>
 
-            <div class="modal-content" id="modal-majelis-content">
-              <div class="modal-form">
-                <div class="form col-wrapper" id="majelis-form">
-                  <div class="form-group row-wrapper" id="nama-majelis">
-                    <label for="nama">Nama</label>
-                    <div class="col-wrapper w-full input-div" id="input-nama">
-                      <input type="text" id="nama" name="nama" placeholder="Nama Majelis">
-                      <div class="helper-text">
+  <div class="modal center" id="modal">
+    <div class="modal-header row-wrapper" id="modal-majelis-header">
+      <h2 id="modal-majelis-title">Majelis</h2>
+      <span class="close row-wrapper" id="modal-close-button">&times;</span>
+    </div>
 
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row-wrapper" id="wilayah-majelis">
-                    <label for="wilayah">Wilayah</label>
-                    <div class="col-wrapper w-full input-div" id="input-wilayah">
-                      <select id="wilayah" name="wilayah">
-                        <option value="Paseltan">Paseltan</option>
-                        <option value="Pasutra">Pasutra</option>
-                        <option value="Pandur">Pandur</option>
-                        <option value="Teruri">Teruri</option>
-                        <option value="Pulobalimentas">Pulobalimentas</option>
-                      </select>
-                      <div class="helper-text">
+    <div class="modal-content" id="modal-majelis-content">
+      <div class="modal-form">
+        <div class="form col-wrapper" id="majelis-form">
+          <div class="form-group row-wrapper" id="nama-majelis">
+            <label for="nama">Nama</label>
+            <div class="col-wrapper w-full input-div" id="input-nama">
+              <input type="text" id="nama" name="nama" placeholder="Nama Majelis">
+              <div class="helper-text">
 
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row-wrapper" id="gelar-majelis">
-                    <label for="gelar">Gelar</label>
-                    <div class="col-wrapper w-full input-div" id="input-gelar">
-                      <select name="gelar" id="gelar">
-                        <option value="Penatua">Penatua</option>
-                        <option value="Diaken">Diaken</option>
-                      </select>
-                      <div class="helper-text">
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
-
-            <div class="modal-footer row-wrapper" id="modal-majelis-footer">
-              <button type="reset" class="button-17 btn-warning" onclick="resetForm()">reset</button>
-              <button class="button-17 submit-btn" id="modal-majelis-submit">Submit</button>
-            </div>
-
           </div>
-          <%- include('../partials/extraScripts') %>
-            <script src="../javascripts/index.js"></script>
-            <script src="../javascripts/majelis/index.js"></script>
+          <div class="form-group row-wrapper" id="wilayah-majelis">
+            <label for="wilayah">Wilayah</label>
+            <div class="col-wrapper w-full input-div" id="input-wilayah">
+              <select id="wilayah" name="wilayah">
+                <option value="Paseltan">Paseltan</option>
+                <option value="Pasutra">Pasutra</option>
+                <option value="Pandur">Pandur</option>
+                <option value="Teruri">Teruri</option>
+                <option value="Pulobalimentas">Pulobalimentas</option>
+              </select>
+              <div class="helper-text">
+
+              </div>
+            </div>
+          </div>
+          <div class="form-group row-wrapper" id="gelar-majelis">
+            <label for="gelar">Gelar</label>
+            <div class="col-wrapper w-full input-div" id="input-gelar">
+              <select name="gelar" id="gelar">
+                <option value="Penatua">Penatua</option>
+                <option value="Diaken">Diaken</option>
+              </select>
+              <div class="helper-text">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer row-wrapper" id="modal-majelis-footer">
+      <button type="reset" class="button-17 btn-warning" onclick="resetForm()">reset</button>
+      <button class="button-17 submit-btn" id="modal-majelis-submit">Submit</button>
+    </div>
+
+  </div>
+  <%- include('../partials/extraScripts') %>
+    <script src="../javascripts/index.js"></script>
+    <script src="../javascripts/majelis/index.js"></script>
 
 </body>
 

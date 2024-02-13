@@ -4,7 +4,12 @@ async function getAllMajelis() {
     try {
         const response = await fetch('/majelis/json');
         const majelisListData = await response.json();
-        majelisList = majelisListData.data;
+
+        if (majelisListData.status === 200) {
+            majelisList = majelisListData.data;
+        } else {
+            makeToast('error', majelisListData.message);
+        }
     } catch (error) {
         console.error('Error fetching majelis data:', error);
     }
@@ -18,13 +23,17 @@ async function getMajelis(id) {
     try {
         const response = await fetch('/majelis/json/' + id);
         const majelisData = await response.json();
-        majelis = majelisData.data;
+
+        if (majelisData.status === 200) {
+            majelis = majelisData.data;
+        } else {
+            makeToast('error', majelisData.message);
+        }
     } catch (error) {
         console.error('Error fetching majelis data:', error);
     }
 
     return majelis;
-
 }
 
 async function updateMajelisGrid(showToast = false) {
@@ -41,6 +50,7 @@ async function updateMajelisGrid(showToast = false) {
         let cardGrid = document.createElement('div');
         cardGrid.classList.add('card-grid');
         majelis.forEach(function (majelis) {
+            const id = majelis.majelis_id;
 
             let cardItem = document.createElement('div');
             cardItem.classList.add('card-item', 'col-wrapper');
@@ -56,33 +66,14 @@ async function updateMajelisGrid(showToast = false) {
             editButton.classList.add('edit-button', 'button-17');
             editButton.innerHTML = 'Edit';
             editButton.onclick = function () {
-                editMajelis(majelis.majelis_id);
+                editMajelis(id);
             }
 
             let deleteButton = document.createElement('button');
             deleteButton.classList.add('btn-warning', 'button-17');
             deleteButton.innerHTML = 'Hapus';
             deleteButton.onclick = function () {
-                let deletePermission = confirm('Apakah anda yakin ingin menghapus majelis ini?');
-                if (deletePermission) {
-                    fetch('/majelis/delete/' + majelis.majelis_id, {
-                        method: 'DELETE'
-                    })
-                        .then(response => {
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.status === 200) {
-                                makeToast('success', data.message);
-                                updateMajelisGrid();
-                            } else {
-                                makeToast('warning', data.message);
-                            }
-                        })
-                        .catch(error => {
-                            makeToast('error', error);
-                        });
-                }
+                deleteMajelis(id);
             }
 
             cardButton.appendChild(editButton);
@@ -102,18 +93,27 @@ async function updateMajelisGrid(showToast = false) {
     }
 }
 
-async function resetForm(bypass = false) {
-    if (!bypass) {
-        let resetPermission = confirm('Apakah anda yakin ingin mereset form?');
-        if (!resetPermission) {
-            return;
-        }
-    }
-    majelisForm.querySelectorAll('.form-group').forEach(function (formDiv) {
-        formDiv.querySelectorAll('input').forEach(function (input) {
-            input.value = '';
+function deleteMajelis(id) {
+    let deletePermission = confirm('Apakah anda yakin ingin menghapus majelis ini?');
+    if (deletePermission) {
+        fetch('/majelis/delete/' + id, {
+            method: 'DELETE'
         })
-    });
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 200) {
+                    makeToast('success', data.message);
+                    updateMajelisGrid();
+                } else {
+                    makeToast('error', data.message);
+                }
+            })
+            .catch(error => {
+                makeToast('error', error);
+            });
+    }
 }
 
 async function createMajelis() {
@@ -162,7 +162,7 @@ async function createMajelis() {
                 if (data.status === 200) {
                     makeToast('success', data.message);
                     updateMajelisGrid();
-                    resetForm(true);
+                    resetForm(majelisForm, true);
                     hideModal();
                 } else {
                     makeToast('warning', data.message);
@@ -238,7 +238,7 @@ async function editMajelis(id) {
                 if (data.status === 200) {
                     makeToast('success', data.message);
                     updateMajelisGrid();
-                    resetForm(true);
+                    resetForm(majelisForm, true);
                     hideModal();
                 } else {
                     makeToast('warning', data.message);
