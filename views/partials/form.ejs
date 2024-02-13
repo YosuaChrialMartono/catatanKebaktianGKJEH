@@ -1,16 +1,16 @@
-<div class="form-group col-wrapper">
-    <div class="form-group row-wrapper" id="jenis-kebaktian">
+<div class="form-group col-wrapper" id="catatan-form-1">
+    <div class="form-group-child row-wrapper" id="jenis-kebaktian">
         <label>Jenis Kebaktian *</label>
-        <input type="text" class="form-control" name="jenis_kebaktian" placeholder="Masukkan Jenis Kebaktian" required>
+        <input type="text" name="jenis_kebaktian" placeholder="Masukkan Jenis Kebaktian" required>
     </div>
 
-    <div class="form-group row-wrapper" id="tanggal-waktu-kebaktian">
+    <div class="form-group-child row-wrapper" id="tanggal-waktu-kebaktian">
         <label>Tanggal & Waktu Kebaktian *</label>
-        <input type="date" class="form-control" name="tanggal_kebaktian" placeholder="YYYY-MM-DD" required>
-        <input type="time" class="form-control" name="waktu_kebaktian" placeholder="Masukkan Waktu Kebaktian" required>
+        <input type="date" name="tanggal_kebaktian" placeholder="YYYY-MM-DD" required>
+        <input type="time" name="waktu_kebaktian" placeholder="Masukkan Waktu Kebaktian" required>
     </div>
 
-    <div class="form-group row-wrapper" id="perikop-bacaan">
+    <div class="form-group-child row-wrapper" id="perikop-bacaan">
         <label>Perikop Bacaan *</label>
         <div class="perikop-form row-wrapper">
             <select name="kitab" id="kitab" required>
@@ -30,38 +30,39 @@
         </div>
     </div>
 
-    <div class="form-group row-wrapper" id="tema-renungan">
+    <div class="form-group-child row-wrapper" id="tema-renungan">
         <label>Tema Renungan *</label>
-        <input type="text" class="form-control" name="tema_renungan" placeholder="Masukkan Tema Renungan" required>
+        <input type="text" name="tema_renungan" placeholder="Masukkan Tema Renungan" required>
     </div>
-</div>
 
-<div class="form-group col-wrapper pelayanan-khusus-form">
-    <label>Pelayanan Khusus</label>
-    <div class="baptis-kudus-anak form-group-child row-wrapper">
-        <label>Baptis Kudus Anak</label>
-        <input type="text" inputmode="numeric" name="baptis_kudus_anak" placeholder="Masukkan Jumlah Baptis Kudus Anak">
-    </div>
-    <div class="baptis-kudus-dewasa form-group-child row-wrapper">
-        <label>Baptis Kudus Dewasa</label>
-        <input type="text" inputmode="numeric" name="baptis_kudus_dewasa"
-            placeholder="Masukkan Jumlah Baptis Kudus Dewasa">
-    </div>
-    <div class="mengaku-percaya form-group-child row-wrapper">
-        <label>Mengaku Percaya (Sidi)</label>
-        <input type="text" inputmode="numeric" name="mengaku_percaya" placeholder="Masukkan Jumlah Mengaku Percaya">
-    </div>
-    <div class="pemberkatan-nikah form-group-child row-wrapper">
-        <label>Pemberkatan Nikah</label>
-        <div class="mempelai-nikah col-wrapper">
-            <div class="mempelai-nikah-input row-wrapper">
-                <label>Saudara</label>
-                <input type="text" name="mempelai_pria" placeholder="Masukkan Nama Mempelai Pria">
-            </div>
-            <label>Dengan</label>
-            <div class="mempelai-nikah-input row-wrapper">
-                <label>Saudari</label>
-                <input type="text" name="mempelai_wanita" placeholder="Masukkan Nama Mempelai Wanita">
+    <div class="col-wrapper pelayanan-khusus-form">
+        <label>Pelayanan Khusus</label>
+        <div class="baptis-kudus-anak form-group-child row-wrapper">
+            <label>Baptis Kudus Anak</label>
+            <input type="text" inputmode="numeric" name="baptis_kudus_anak"
+                placeholder="Masukkan Jumlah Baptis Kudus Anak">
+        </div>
+        <div class="baptis-kudus-dewasa form-group-child row-wrapper">
+            <label>Baptis Kudus Dewasa</label>
+            <input type="text" inputmode="numeric" name="baptis_kudus_dewasa"
+                placeholder="Masukkan Jumlah Baptis Kudus Dewasa">
+        </div>
+        <div class="mengaku-percaya form-group-child row-wrapper">
+            <label>Mengaku Percaya (Sidi)</label>
+            <input type="text" inputmode="numeric" name="mengaku_percaya" placeholder="Masukkan Jumlah Mengaku Percaya">
+        </div>
+        <div class="pemberkatan-nikah form-group-child row-wrapper">
+            <label>Pemberkatan Nikah</label>
+            <div class="mempelai-nikah col-wrapper">
+                <div class="mempelai-nikah-input row-wrapper">
+                    <label>Saudara</label>
+                    <input type="text" name="mempelai_pria" placeholder="Masukkan Nama Mempelai Pria">
+                </div>
+                <label>Dengan</label>
+                <div class="mempelai-nikah-input row-wrapper">
+                    <label>Saudari</label>
+                    <input type="text" name="mempelai_wanita" placeholder="Masukkan Nama Mempelai Wanita">
+                </div>
             </div>
         </div>
     </div>
@@ -217,64 +218,73 @@
             orang
         </div>
     </div>
+
+    <div class="form-group-child row-wrapper" id="peserta-perjamuan-kudus">
+        <label>Peserta Perjamuan Kudus</label>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="0" name="peserta-perjamuan-kudus">
+        orang
+    </div>
 </div>
 
-<div class="form-group row-wrapper" id="peserta-perjamuan-kudus">
-    <label>Peserta Perjamuan Kudus</label>
-    <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="0" name="peserta-perjamuan-kudus">
-    orang
-</div>
 
-<div class="form-group col-wrapper" id="majelis-tugas">
+
+<div class="form-group col-wrapper" id="majelis-tugas-form">
     <label>Anggota Majelis yang Hadir</label>
 
-    <div id="majelis-tugas-form" class="majelis-tugas-form col-wrapper">
+    <div class="majelis-tugas-form col-wrapper" id="majelis-tugas">
     </div>
 
     <button type="button" onclick="addMajelisBertugas()" class="button-17"> Add Majelis</button>
 </div>
 
-<!-- Masukkan select option dari list majelis yang ada -->
-<div class="form-group row-wrapper" id="pic-ibadah">
-    <label>PIC Ibadah *</label>
-    <select name="pic-ibadah" id="pic-ibadah-selection" required></select>
-</div>
-
-<div class="form-group row-wrapper" id="organis">
-    <label>Organis</label>
-    <input type="text" class="form-control" name="organis" placeholder="Masukkan Organis">
-</div>
-
-<div class="form-group row-wrapper" id="prokantor">
-    <label>Prokantor</label>
-    <div class="col-wrapper form-group-child" id="prokantor-input">
-        <input type="text" placeholder="Prokantor 1">
-        <input type="text" placeholder="Prokantor 2">
-        <input type="text" placeholder="Prokantor 3">
-    </div>
-</div>
-
-<div class="form-group row-wrapper" id="operator-lcd">
-    <label>Operator LCD</label>
-    <input type="text" class="form-control" name="operator-lcd" placeholder="Masukkan Operator LCD">
-</div>
-
-<div class="form-group row-wrapper" id="tanggal-pembuatan">
-    <label>Jakarta,</label>
-    <input type="date" class="form-control" name="tanggal_pembuatan" placeholder="Masukkan Tanggal Pembuatan">
-</div>
-
-<!-- Masukkan select option dari list majelis dan pelayan firman yang ada -->
-<div class="form-group row-wrapper" id="pembuat-catatan-kebaktian">
-    <div class="col-wrapper" id="majelis-pembuat">
-        <label>Majelis Gereja *</label>
-        <select name="majelis-pembuat" id="majelis-pembuat-selection" required></select>
+<div class="form-group col-wrapper" id="catatan-form-2">
+    <div class="form-group-child row-wrapper" id="pic-ibadah">
+        <label>PIC Ibadah *</label>
+        <select name="pic-ibadah" id="pic-ibadah-selection" required></select>
     </div>
 
-    <div class="col-wrapper" id="pelayan-firman">
-        <label>Pelayan Firman *</label>
-        <select name="pelayan-firman" id="pelayan-firman-selection" required></select>
+    <div class="form-group-child row-wrapper" id="organis">
+        <label>Organis</label>
+        <input type="text" name="organis" placeholder="Masukkan Organis">
     </div>
+
+    <div class="form-group-child row-wrapper" id="prokantor">
+        <label>Prokantor</label>
+        <div class="col-wrapper form-group-child" id="prokantor-input">
+            <input type="text" placeholder="Prokantor 1">
+            <input type="text" placeholder="Prokantor 2">
+            <input type="text" placeholder="Prokantor 3">
+        </div>
+    </div>
+
+    <div class="form-group-child row-wrapper" id="operator-lcd">
+        <label>Operator LCD</label>
+        <input type="text" name="operator-lcd" placeholder="Masukkan Operator LCD">
+    </div>
+
+    <div class="form-group-child row-wrapper" id="program-director">
+        <label>Program Director</label>
+        <input type="text" name="program-director" placeholder="Masukkan Program Director">
+    </div>
+
+    <div class="form-group-child row-wrapper" id="tanggal-pembuatan">
+        <label>Jakarta,</label>
+        <input type="date" name="tanggal_pembuatan" placeholder="Masukkan Tanggal Pembuatan">
+    </div>
+
+    <!-- Masukkan select option dari list majelis dan pelayan firman yang ada -->
+    <div class="form-group-child row-wrapper" id="pembuat-catatan-kebaktian">
+        <div class="col-wrapper" id="majelis-pembuat">
+            <label>Majelis Gereja *</label>
+            <select name="majelis-pembuat" id="majelis-pembuat-selection" required></select>
+        </div>
+
+        <div class="col-wrapper" id="pelayan-firman">
+            <label>Pelayan Firman *</label>
+            <select name="pelayan-firman" id="pelayan-firman-selection" required></select>
+        </div>
+    </div>
+
 </div>
 
 <div class="form-group col-wrapper" id="evaluasi-kebaktian">
